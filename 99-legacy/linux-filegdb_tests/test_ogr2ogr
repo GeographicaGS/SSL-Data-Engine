@@ -1,0 +1,15 @@
+ogr2ogr -overwrite -gt 5000 -preserve_fid -f 'ESRI Shapefile' shapes ~/Dropbox/ragnarok/geowarehouse/test_esri_filegdb_10.2/test.gdb municipio -nln municipio -nlt POLYGON -a_srs EPSG:25830
+
+ogr2ogr -overwrite -gt 5000 -preserve_fid -f 'ESRI Shapefile' shapes ~/Dropbox/ragnarok/geowarehouse/test_esri_filegdb_10.2/test.gdb line -nln line -nlt LINESTRING -a_srs EPSG:25830
+
+ogr2ogr -overwrite -gt 5000 -preserve_fid -f 'CSV' . ~/Dropbox/ragnarok/geowarehouse/test_esri_filegdb_10.2/test.gdb test_table -nln test_table -nlt NONE
+
+ogr2ogr -overwrite -gt 5000 -preserve_fid -f 'FileGDB' new_test_gdb.gdb shape_test_import_fgdb.shp -nln test_layer -nlt POINT -a_srs EPSG:25830
+
+# Find out if dataset creation is possible and if layers can be exported inside one of them
+
+ogr2ogr -overwrite -gt 5000 -preserve_fid -f 'FileGDB' new_test_gdb.gdb shape_test_import_fgdb.shp -nln test_layer -lco SCHEMA=a -nlt POINT -a_srs EPSG:25830
+
+
+
+# ESRI's FileGDB for Linux seems to be nice enough to make some sort of development in the future. By now, focus in a Windows Python to create the Database objects.
