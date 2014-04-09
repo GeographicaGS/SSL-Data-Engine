@@ -1,4 +1,22 @@
-# This is my README
+Introduction
+============
+This is a project by University of Sevilla and Geographica to process and publish data from the Subsistema Litoral (Coastal Subsystem).
+
+Version Policy
+==============
+Make heavy use of tags to track each year version of the workflow. Follow this example:
+
+    2014.2.11
+
+where 2014 is the ongoing edition of SSL, 2 is increased every time a non-compatible change is made to the database schema, and 11 are bugfixing.
+
+Installation
+============
+Steps:
+
+  * create database (check database configuration);
+  * install in Windows Git, GDAL and gdal-110-1600-core/filegdb;
+  * clone 
 
 Database Configuration
 ======================
@@ -23,5 +41,12 @@ Follow this steps (files in 00-postgis unless stated):
 
   * drop database with 20-database-drop.sql if needed;
   * configure 00-config.sql;
-  * rebuild database with 10-full.sql;
-  
+  * rebuild database with 10-full.sql.
+
+Coast Line Workflow
+===================
+Steps:
+
+  * import with _Import-LineaCostaProduccion_;
+  * translate info with _linea_costa.sql_;
+  * export with _Export-LineaCostaShapes_ and _Export-LineaCostaPgdbProduccion_.
