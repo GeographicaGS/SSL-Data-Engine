@@ -793,6 +793,7 @@ with a as(
   select
     nv1,
     id_tipo_linea,
+    tipo_linea,
     deslinde,
     id_fuente,
     texto_wms,
@@ -810,6 +811,7 @@ with a as(
   group by
     nv1,
     id_tipo_linea,
+    tipo_linea,
     deslinde,
     id_fuente,
     texto_wms,
@@ -825,6 +827,7 @@ select
   row_number() over (order by nv1) as gid,
   nv1,
   id_tipo_linea,
+  tipo_linea,
   deslinde,
   id_fuente,
   texto_wms,
@@ -842,19 +845,67 @@ from a;
 
 
 create or replace view linea_costa_export.vw__nivel_1_larga as
-select *
+select
+  gid,
+  nv1,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom as geom
 from linea_costa_export.vw__nivel_1
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__nivel_1_corta as
-select *
+select
+  gid,
+  nv1,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom as geom
 from linea_costa_export.vw__nivel_1
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__nivel_1_erosion as
-select *
+select
+  gid,
+  nv1,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom as geom
 from linea_costa_export.vw__nivel_1
 where id_tipo_linea in (0,2,3,5,6);
 
@@ -865,6 +916,7 @@ with a as(
     nv1,
     nv2,
     id_tipo_linea,
+    tipo_linea,
     deslinde,
     id_fuente,
     texto_wms,
@@ -883,6 +935,7 @@ with a as(
     nv1,
     nv2,
     id_tipo_linea,
+    tipo_linea,
     deslinde,
     id_fuente,
     texto_wms,
@@ -895,9 +948,11 @@ with a as(
     toponimo_carta_nautica,
     toponimo_ministerio)
 select 
+  row_number() over (order by id_tipo_linea) as gid,
   nv1,
   nv2,
   id_tipo_linea,
+  tipo_linea,
   deslinde,
   id_fuente,
   texto_wms,
@@ -915,19 +970,73 @@ from a;
 
 
 create or replace view linea_costa_export.vw__nivel_2_larga as
-select *
+select
+  gid,
+  nv1,
+  nv2,
+  id_tipo_linea,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__nivel_2
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__nivel_2_corta as
-select *
+select
+  gid,
+  nv1,
+  nv2,
+  id_tipo_linea,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__nivel_2
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__nivel_2_erosion as
-select *
+select
+  gid,
+  nv1,
+  nv2,
+  id_tipo_linea,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__nivel_2
 where id_tipo_linea in (0,2,3,5,6);
 
@@ -939,6 +1048,7 @@ with a as(
     nv2,
     nv3,
     id_tipo_linea,
+    tipo_linea,
     deslinde,
     id_fuente,
     texto_wms,
@@ -958,6 +1068,7 @@ with a as(
     nv2,
     nv3,
     id_tipo_linea,
+    tipo_linea,
     deslinde,
     id_fuente,
     texto_wms,
@@ -970,10 +1081,12 @@ with a as(
     toponimo_carta_nautica,
     toponimo_ministerio)
 select
+  row_number() over (order by id_tipo_linea) as gid,
   nv1,
   nv2,
   nv3,
   id_tipo_linea,
+  tipo_linea,
   deslinde,
   id_fuente,
   texto_wms,
@@ -990,31 +1103,90 @@ select
 from a;
 
 create or replace view linea_costa_export.vw__nivel_3_larga as
-select *
+select
+  gid,
+  nv1,
+  nv2,
+  nv3,
+  id_tipo_linea,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__nivel_3
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__nivel_3_corta as
-select *
+select
+  gid,
+  nv1,
+  nv2,
+  nv3,
+  id_tipo_linea,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__nivel_3
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__nivel_3_erosion as
-select *
+select
+  gid,
+  nv1,
+  nv2,
+  nv3,
+  id_tipo_linea,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__nivel_3
 where id_tipo_linea in (0,2,3,5,6);
 
 
 create or replace view linea_costa_export.vw__playas as
 select
+  row_number() over (order by id_tipo_linea) as gid,
   playas,
   nv1,
   nv2,
   nv3,
   nv4,
   id_tipo_linea,
+  tipo_linea,
   id_fuente,
   texto_wms,
   criterio,
@@ -1033,25 +1205,83 @@ where playas is not null;
 
 
 create or replace view linea_costa_export.vw__playas_larga as
-select *
+select
+  gid,
+  playas,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  st_length(geom) as length,
+  geom
 from linea_costa_export.vw__playas
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__playas_corta as
-select *
+select
+  gid,
+  playas,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  st_length(geom) as length,
+  geom
 from linea_costa_export.vw__playas
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__playas_erosion as
-select *
+select
+  gid,
+  playas,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  st_length(geom) as length,
+  geom
 from linea_costa_export.vw__playas
 where id_tipo_linea in (0,2,3,5,6);
 
 
 create or replace view linea_costa_export.vw__dunas as
 select
+  row_number() over (order by id_tipo_linea) as gid,
   dunas,
   duna_anchura,
   duna_anc_indicador,
@@ -1061,6 +1291,7 @@ select
   nv3,
   nv4,
   id_tipo_linea,
+  tipo_linea,
   id_fuente,
   texto_wms,
   criterio,
@@ -1079,31 +1310,99 @@ where dunas is not null;
 
 
 create or replace view linea_costa_export.vw__dunas_larga as
-select *
+select
+  gid,
+  dunas,
+  duna_anchura,
+  duna_anc_indicador,
+  sustrato,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__dunas
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__dunas_corta as
-select *
+select
+  gid,
+  dunas,
+  duna_anchura,
+  duna_anc_indicador,
+  sustrato,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__dunas
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__dunas_erosion as
-select *
+select
+  gid,
+  dunas,
+  duna_anchura,
+  duna_anc_indicador,
+  sustrato,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__dunas
 where id_tipo_linea in (0,2,3,5,6);
 
 
 create or replace view linea_costa_export.vw__acantilados as
 select
+  row_number() over (order by id_tipo_linea) as gid,
   acantilados,
   nv1,
   nv2,
   nv3,
   nv4,
   id_tipo_linea,
+  tipo_linea,
   id_fuente,
   texto_wms,
   criterio,
@@ -1122,31 +1421,93 @@ where acantilados is not null;
 
 
 create or replace view linea_costa_export.vw__acantilados_larga as
-select *
+select
+  gid,
+  acantilados,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__acantilados
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__acantilados_corta as
-select *
+select  
+  gid,
+  acantilados,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__acantilados
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__acantilados_erosion as
-select *
+select
+  gid,
+  acantilados,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__acantilados
 where id_tipo_linea in (0,2,3,5,6);
 
 
 create or replace view linea_costa_export.vw__infraestructuras as
 select
+  row_number() over (order by id_tipo_linea) as gid,
   infraestructura_frente,
   infraestructura_2_linea,
   infraestructura_tipo,
   infraestructura_localizacion,
   infraestructura_exposicion,
   id_tipo_linea,
+  tipo_linea,
   nv1,
   nv2,
   nv3,
@@ -1169,25 +1530,98 @@ where infraestructura_frente is not null;
 
 
 create or replace view linea_costa_export.vw__infraestructuras_larga as
-select *
+select
+  gid,
+  infraestructura_frente,
+  infraestructura_2_linea,
+  infraestructura_tipo,
+  infraestructura_localizacion,
+  infraestructura_exposicion,
+  id_tipo_linea,
+  tipo_linea,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__infraestructuras
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__infraestructuras_corta as
-select *
+select
+  gid,
+  infraestructura_frente,
+  infraestructura_2_linea,
+  infraestructura_tipo,
+  infraestructura_localizacion,
+  infraestructura_exposicion,
+  id_tipo_linea,
+  tipo_linea,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__infraestructuras
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__infraestructuras_erosion as
-select *
+select
+  gid,
+  infraestructura_frente,
+  infraestructura_2_linea,
+  infraestructura_tipo,
+  infraestructura_localizacion,
+  infraestructura_exposicion,
+  id_tipo_linea,
+  tipo_linea,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__infraestructuras
 where id_tipo_linea in (0,2,3,5,6);
 
 
 create or replace view linea_costa_export.vw__margenes_estuarios_canyos as
 select
+  row_number() over (order by id_tipo_linea) as gid,
   tipo_margen,
   deslinde,
   nv1,
@@ -1195,6 +1629,7 @@ select
   nv3,
   nv4,
   id_tipo_linea,
+  tipo_linea,
   id_fuente,
   texto_wms,
   criterio,
@@ -1213,25 +1648,89 @@ where tipo_margen is not null;
 
 
 create or replace view linea_costa_export.vw__margenes_estuarios_canyos_larga as
-select *
+select
+  gid,
+  tipo_margen,
+  deslinde,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__margenes_estuarios_canyos
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__margenes_estuarios_canyos_corta as
-select *
+select
+  gid,
+  tipo_margen,
+  deslinde,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__margenes_estuarios_canyos
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__margenes_estuarios_canyos_erosion as
-select *
+select
+  gid,
+  tipo_margen,
+  deslinde,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__margenes_estuarios_canyos
 where id_tipo_linea in (0,2,3,5,6);
 
 
 create or replace view linea_costa_export.vw__urbano as
 select
+  row_number() over (order by id_tipo_linea) as gid,
   urbano,
   urbano_proximidad,
   nv1,
@@ -1239,6 +1738,7 @@ select
   nv3,
   nv4,
   id_tipo_linea,
+  tipo_linea,
   id_fuente,
   texto_wms,
   criterio,
@@ -1258,31 +1758,93 @@ where
 
 
 create or replace view linea_costa_export.vw__urbano_larga as
-select *
+select
+  gid,
+  urbano,
+  urbano_proximidad,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__urbano
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__urbano_corta as
-select *
+select
+  gid,
+  urbano,
+  urbano_proximidad,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__urbano
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__urbano_erosion as
-select *
+select
+  gid,
+  urbano,
+  urbano_proximidad,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__urbano
 where id_tipo_linea in (0,2,3,5,6);
 
 
 create or replace view linea_costa_export.vw__criterio as
 select
+  row_number() over (order by id_tipo_linea) as gid,
   criterio,
   nv1,
   nv2,
   nv3,
   nv4,
   id_tipo_linea,
+  tipo_linea,
   id_fuente,
   texto_wms,
   tipo_toponimo_ssl,
@@ -1300,30 +1862,89 @@ where criterio is not null;
 
 
 create or replace view linea_costa_export.vw__criterio_larga as
-select *
+select
+  gid,
+  criterio,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__criterio
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__criterio_corta as
-select *
+select
+  gid,
+  criterio,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__criterio
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__criterio_erosion as
-select *
+select
+  gid,
+  criterio,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__criterio
 where id_tipo_linea in (0,2,3,5,6);
 
 
 create or replace view linea_costa_export.vw__fechas as
 select
+  row_number() over (order by id_tipo_linea) as gid,
   nv1,
   nv2,
   nv3,
   nv4,
   id_tipo_linea,
+  tipo_linea,
   id_fuente,
   texto_wms,
   criterio,
@@ -1341,19 +1962,73 @@ from
 
 
 create or replace view linea_costa_export.vw__fechas_larga as
-select *
+select
+  gid,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__fechas
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__fechas_corta as
-select *
+select
+  gid,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__fechas
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__fechas_erosion as
-select *
+select
+  gid,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  tipo_linea,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__fechas
 where id_tipo_linea in (0,2,3,5,6);
 
@@ -1362,6 +2037,7 @@ create or replace view linea_costa_export.vw__toponimo_aeroguia as
 with a as(
   select
     id_tipo_linea,
+    tipo_linea,
     toponimo_aeroguia,
     (st_dump(st_linemerge(st_collect(geom)))).geom as geom
   from
@@ -1369,9 +2045,12 @@ with a as(
   where toponimo_aeroguia is not null
   group by
     id_tipo_linea,
+    tipo_linea,
     toponimo_aeroguia)
 select
+  row_number() over (order by id_tipo_linea) as gid,
   id_tipo_linea,
+  tipo_linea,
   toponimo_aeroguia,
   st_length(geom) as length,
   geom as geom
@@ -1379,19 +2058,37 @@ from a;
 
 
 create or replace view linea_costa_export.vw__toponimo_aeroguia_larga as
-select *
+select
+  gid,
+  id_tipo_linea,
+  tipo_linea,
+  toponimo_aeroguia,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_aeroguia
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__toponimo_aeroguia_corta as
-select *
+select
+  gid,
+  id_tipo_linea,
+  tipo_linea,
+  toponimo_aeroguia,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_aeroguia
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__toponimo_aeroguia_erosion as
-select *
+select
+  gid,
+  id_tipo_linea,
+  tipo_linea,
+  toponimo_aeroguia,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_aeroguia
 where id_tipo_linea in (0,2,3,5,6);
 
@@ -1400,6 +2097,7 @@ create or replace view linea_costa_export.vw__toponimo_ssl as
 with a as(
   select
     id_tipo_linea,
+    tipo_linea,
     tipo_toponimo_ssl,
     toponimo_ssl,
     fuente_toponimo_ssl,
@@ -1409,11 +2107,14 @@ with a as(
   where toponimo_ssl is not null
   group by
     id_tipo_linea,
+    tipo_linea,
     tipo_toponimo_ssl,
     toponimo_ssl,
     fuente_toponimo_ssl)
 select
+  row_number() over (order by id_tipo_linea) as gid,
   id_tipo_linea,
+  tipo_linea,
   tipo_toponimo_ssl,
   toponimo_ssl,
   fuente_toponimo_ssl,
@@ -1423,19 +2124,40 @@ from a;
 
 
 create or replace view linea_costa_export.vw__toponimo_ssl_larga as
-select *
+select
+  gid,
+  tipo_linea,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_ssl
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__toponimo_ssl_corta as
-select *
+select
+  gid,
+  tipo_linea,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_ssl
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__toponimo_ssl_erosion as
-select *
+select
+  gid,
+  tipo_linea,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_ssl
 where id_tipo_linea in (0,2,3,5,6);
 
@@ -1444,6 +2166,7 @@ create or replace view linea_costa_export.vw__toponimo_sigla as
 with a as(
   select
     id_tipo_linea,
+    tipo_linea,
     toponimo_sigla,
     (st_dump(st_linemerge(st_collect(geom)))).geom as geom
   from
@@ -1451,9 +2174,12 @@ with a as(
   where toponimo_sigla is not null
   group by
     id_tipo_linea,
+    tipo_linea,
     toponimo_sigla)
 select
+  row_number() over (order by id_tipo_linea) as gid,
   id_tipo_linea,
+  tipo_linea,
   toponimo_sigla,
   st_length(geom) as length,
   geom
@@ -1461,19 +2187,34 @@ from a;
 
 
 create or replace view linea_costa_export.vw__toponimo_sigla_larga as
-select *
+select
+  gid,
+  tipo_linea,
+  toponimo_sigla,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_sigla
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__toponimo_sigla_corta as
-select *
+select 
+  gid,
+  tipo_linea,
+  toponimo_sigla,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_sigla
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__toponimo_sigla_erosion as
-select *
+select 
+  gid,
+  tipo_linea,
+  toponimo_sigla,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_sigla
 where id_tipo_linea in (0,2,3,5,6);
 
@@ -1482,6 +2223,7 @@ create or replace view linea_costa_export.vw__toponimo_carta_nautica as
 with a as(
   select
     id_tipo_linea,
+    tipo_linea,
     toponimo_carta_nautica,
     (st_dump(st_linemerge(st_collect(geom)))).geom as geom
   from
@@ -1489,9 +2231,12 @@ with a as(
   where toponimo_carta_nautica is not null
   group by
     id_tipo_linea,
+    tipo_linea,
     toponimo_carta_nautica)
-select 
+select
+  row_number() over (order by id_tipo_linea) as gid,
   id_tipo_linea,
+  tipo_linea,
   toponimo_carta_nautica,
   st_length(geom) as length,
   geom
@@ -1499,19 +2244,34 @@ from a;
 
 
 create or replace view linea_costa_export.vw__toponimo_carta_nautica_larga as
-select *
+select
+  gid,
+  tipo_linea,
+  toponimo_carta_nautica,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_carta_nautica
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__toponimo_carta_nautica_corta as
-select *
+select
+  gid,
+  tipo_linea,
+  toponimo_carta_nautica,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_carta_nautica
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__toponimo_carta_nautica_erosion as
-select *
+select
+  gid,
+  tipo_linea,
+  toponimo_carta_nautica,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_carta_nautica
 where id_tipo_linea in (0,2,3,5,6);
 
@@ -1520,6 +2280,7 @@ create or replace view linea_costa_export.vw__toponimo_ministerio as
 with a as(
   select
     id_tipo_linea,
+    tipo_linea,
     toponimo_ministerio,
     (st_dump(st_linemerge(st_collect(geom)))).geom as geom
   from
@@ -1527,9 +2288,12 @@ with a as(
   where toponimo_ministerio is not null
   group by
     id_tipo_linea,
+    tipo_linea,
     toponimo_ministerio)
 select
+  row_number() over (order by id_tipo_linea) as gid,
   id_tipo_linea,
+  tipo_linea,
   toponimo_ministerio,
   st_length(geom) as length,
   geom
@@ -1537,19 +2301,34 @@ from a;
 
 
 create or replace view linea_costa_export.vw__toponimo_ministerio_larga as
-select *
+select
+  gid,
+  tipo_linea,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_ministerio
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__toponimo_ministerio_corta as
-select *
+select
+  gid,
+  tipo_linea,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_ministerio
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__toponimo_ministerio_erosion as
-select *
+select
+  gid,
+  tipo_linea,
+  toponimo_ministerio,
+  length,
+  geom
 from linea_costa_export.vw__toponimo_ministerio
 where id_tipo_linea in (0,2,3,5,6);
 
@@ -1609,18 +2388,21 @@ with a as(
 select
   sustrato,
   id_tipo_linea,
+  tipo_linea,
   (st_dump(st_linemerge(st_collect(geom)))).geom as geom
 from
   linea_costa_export.vw__complete_described
 where sustrato is not null
 group by
   sustrato,
-  id_tipo_linea
+  id_tipo_linea,
+  tipo_linea
 )
 select
   row_number() over (order by sustrato) as gid,
   sustrato,
   id_tipo_linea,
+  tipo_linea,
   st_length(geom) as length,
   geom
 from
@@ -1628,19 +2410,34 @@ from
 
 
 create or replace view linea_costa_export.vw__sustrato_larga as
-select gid, sustrato, length, geom
+select
+  gid,
+  tipo_linea,
+  sustrato,
+  length,
+  geom
 from linea_costa_export.vw__sustrato
 where id_tipo_linea in (0,1,3,4,5,6);
 
 
 create or replace view linea_costa_export.vw__sustrato_corta as
-select gid, sustrato, length, geom
+select
+  gid,
+  tipo_linea,
+  sustrato,
+  length,
+  geom
 from linea_costa_export.vw__sustrato
 where id_tipo_linea in (0,1,7);
 
 
 create or replace view linea_costa_export.vw__sustrato_erosion as
-select gid, sustrato, length, geom
+select
+  gid,
+  tipo_linea,
+  sustrato,
+  length,
+  geom
 from linea_costa_export.vw__sustrato
 where id_tipo_linea in (0,2,3,5,6);
 
