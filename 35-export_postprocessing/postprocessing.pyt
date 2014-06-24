@@ -75,13 +75,13 @@ class SslCoastLineProductionPostprocessing(object):
         self.__createDomain(database, messages, "acantilado", "id_acantilado", 
                             "descripcion_acantilado", "acantilado", "Acantilado", "id_acantilado")
         self.__createDomain(database, messages, "criterio", "id_criterio", "descripcion_criterio", "criterio", 
-                            "Criterio digitalización", "id_criterio")
+                            u"Criterio digitalizacion", "id_criterio")
         self.__createDomain(database, messages, "deslinde", "id_deslinde", "descripcion_deslinde", 
                             "deslinde", "Rebasamiento de deslinde", "id_deslinde")
         self.__createDomain(database, messages, "duna", "id_duna", "descripcion_duna", "duna", 
                             "Dunas", "id_duna")
         self.__createDomain(database, messages, "estacion", "id_estacion", "descripcion_estacion", 
-                            "estacion", "Estación de digitalización", "id_estacion")
+                            "estacion", u"Estacion de digitalizacion", "id_estacion")
         self.__createDomain(database, messages, "fuente_toponimo_ssl", "id_fuente_toponimo_ssl", 
                             "descripcion_fuente_toponimo_ssl", "fuente_toponimo_ssl",
                             "Fuente del toponimo SSL", "id_fuente_toponimo_ssl")
@@ -92,7 +92,7 @@ class SslCoastLineProductionPostprocessing(object):
                                              "id_infraestructura_2_linea", "infraestructura", "")
         self.__createDomain(database, messages, "infraestructura_exposicion", "id_infraestructura_exposicion", 
                             "descripcion_infraestructura_exposicion", "infraestructura_exposicion", 
-                            "Exposición de infraestructura", "id_infraestructura_exposicion")
+                            u"Exposición de infraestructura", "id_infraestructura_exposicion")
         self.__createDomain(database, messages, "infraestructura_localizacion",
                             "id_infraestructura_localizacion", "descripcion_infraestructura_localizacion",
                             "infraestructura_localizacion", "Localización de infraestructura", 
