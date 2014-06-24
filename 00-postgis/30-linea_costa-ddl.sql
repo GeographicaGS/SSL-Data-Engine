@@ -2520,53 +2520,57 @@ where id_tipo_linea in (0,2,3,5,6);
 
 
 create or replace view linea_costa_export.vw__linea_costa as
+with base as (
+  select
+    e.id_tipologia_nv1,
+    d.id_tipologia_nv2,
+    c.id_tipologia_nv3,
+    a.id_tipologia_nv4,
+    a.id_playa,
+    a.id_duna,
+    a.id_acantilado,
+    a.id_infraestructura_frente,
+    a.id_infraestructura_2_linea,
+    a.id_infraestructura_tipo,
+    a.id_infraestructura_localizacion,
+    a.id_infraestructura_exposicion,
+    a.id_criterio,
+    a.id_deslinde,
+    a.id_tipo_margen,
+    a.id_estacion,
+    a.estacion_comentario,
+    a.id_fuente,
+    a.id_urbano,
+    a.id_urbano_proximidad,
+    a.tipo_toponimo_ssl,
+    a.toponimo_ssl,
+    a.id_fuente_toponimo_ssl,
+    a.toponimo_sigla,
+    a.toponimo_aeroguia,
+    a.toponimo_carta_nautica,
+    a.toponimo_ministerio,
+    a.excl_dsas,
+    a.causa_excl,
+    a.fecha_excl,
+    a.id_tipo_linea,
+    a.id_sustrato,
+    a.duna_anchura,
+    a.duna_anc_indicador,
+    a.tramos_cambiados,
+    st_length(geom) as length,
+    geom
+  from
+    linea_costa.linea_costa a inner join 
+    linea_costa.tipologia_nv4 b on 
+    a.id_tipologia_nv4=b.id_tipologia_nv4 inner join
+    linea_costa.tipologia_nv3 c on
+    b.id_tipologia_nv3=c.id_tipologia_nv3 inner join
+    linea_costa.tipologia_nv2 d on
+    c.id_tipologia_nv2=d.id_tipologia_nv2 inner join
+    linea_costa.tipologia_nv1 e on 
+    d.id_tipologia_nv1=e.id_tipologia_nv1)
 select
-  e.id_tipologia_nv1,
-  d.id_tipologia_nv2,
-  c.id_tipologia_nv3,
-  a.id_tipologia_nv4,
-  a.id_playa,
-  a.id_duna,
-  a.id_acantilado,
-  a.id_infraestructura_frente,
-  a.id_infraestructura_2_linea,
-  a.id_infraestructura_tipo,
-  a.id_infraestructura_localizacion,
-  a.id_infraestructura_exposicion,
-  a.id_criterio,
-  a.id_deslinde,
-  a.id_tipo_margen,
-  a.id_estacion,
-  a.estacion_comentario,
-  a.id_fuente,
-  a.id_urbano,
-  a.id_urbano_proximidad,
-  a.tipo_toponimo_ssl,
-  a.toponimo_ssl,
-  a.toponimo_sigla,
-  a.toponimo_aeroguia,
-  a.toponimo_carta_nautica,
-  a.toponimo_ministerio,
-  a.excl_dsas,
-  a.causa_excl,
-  a.fecha_excl,
-  a.id_tipo_linea,
-  a.id_sustrato,
-  a.duna_anchura,
-  a.duna_anc_indicador,
-  a.tramos_cambiados,
-  st_length(geom) as length,
-  geom
-from
-  linea_costa.linea_costa a inner join 
-  linea_costa.tipologia_nv4 b on 
-  a.id_tipologia_nv4=b.id_tipologia_nv4 inner join
-  linea_costa.tipologia_nv3 c on
-  b.id_tipologia_nv3=c.id_tipologia_nv3 inner join
-  linea_costa.tipologia_nv2 d on
-  c.id_tipologia_nv2=d.id_tipologia_nv2 inner join
-  linea_costa.tipologia_nv1 e on 
-  d.id_tipologia_nv1=e.id_tipologia_nv1;
+
 
 
 create or replace view linea_costa_export.vw__sustrato as
