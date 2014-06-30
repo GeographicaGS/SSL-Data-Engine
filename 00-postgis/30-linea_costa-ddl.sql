@@ -1075,6 +1075,45 @@ select
 from
   a;
 
+create or replace view linea_costa_export.vw__completa_descrita as
+select
+  row_number() over (order by tipo_linea) as gid,
+  tipo_linea,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  playas,
+  dunas,
+  sustrato,
+  duna_anchura,
+  duna_anc_indicador,
+  acantilados,
+  infraestructura_frente,
+  infraestructura_2_linea,
+  infraestructura_tipo,
+  infraestructura_localizacion,
+  infraestructura_exposicion,
+  criterio,
+  deslinde,
+  tipo_margen,
+  estacion,
+  estacion_comentario,
+  texto_wms,
+  urbano,
+  urbano_proximidad,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  st_length(geom) as length,
+  geom
+from 
+  linea_costa_export.vw__linea_costa_descrita;
+
 create or replace view linea_costa_export.vw__linea_costa_descrita_larga as
 select 
   row_number() over (order by tipo_linea) as gid,
@@ -1584,6 +1623,149 @@ from linea_costa_export.vw__nivel_3
 where id_tipo_linea in (0,2,3,5,6);
 
 
+create or replace view linea_costa_export.vw__nivel_4 as
+with a as(
+  select
+    nv1,
+    nv2,
+    nv3,
+    nv4,
+    id_tipo_linea,
+    tipo_linea,
+    deslinde,
+    id_fuente,
+    texto_wms,
+    criterio,
+    tipo_toponimo_ssl,
+    toponimo_ssl,
+    fuente_toponimo_ssl,
+    toponimo_sigla,
+    toponimo_aeroguia,
+    toponimo_carta_nautica,
+    toponimo_ministerio,
+    (st_dump(st_linemerge(st_collect(geom)))).geom as geom
+  from
+    linea_costa_export.vw__complete_described
+  group by
+    nv1,
+    nv2,
+    nv3,
+    nv4,
+    id_tipo_linea,
+    tipo_linea,
+    deslinde,
+    id_fuente,
+    texto_wms,
+    criterio,
+    tipo_toponimo_ssl,
+    toponimo_ssl,
+    fuente_toponimo_ssl,
+    toponimo_sigla,
+    toponimo_aeroguia,
+    toponimo_carta_nautica,
+    toponimo_ministerio)
+select
+  row_number() over (order by id_tipo_linea) as gid,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  st_length(geom) as length,
+  geom
+from a;
+
+
+create or replace view linea_costa_export.vw__nivel_4_larga as
+select
+  gid,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
+from linea_costa_export.vw__nivel_4
+where id_tipo_linea in (0,1,3,4,5,6);
+
+
+create or replace view linea_costa_export.vw__nivel_4_corta as
+select
+  gid,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
+from linea_costa_export.vw__nivel_4
+where id_tipo_linea in (0,1,7);
+
+
+create or replace view linea_costa_export.vw__nivel_4_erosion as
+select
+  gid,
+  nv1,
+  nv2,
+  nv3,
+  nv4,
+  id_tipo_linea,
+  tipo_linea,
+  deslinde,
+  id_fuente,
+  texto_wms,
+  criterio,
+  tipo_toponimo_ssl,
+  toponimo_ssl,
+  fuente_toponimo_ssl,
+  toponimo_sigla,
+  toponimo_aeroguia,
+  toponimo_carta_nautica,
+  toponimo_ministerio,
+  length,
+  geom
+from linea_costa_export.vw__nivel_4
+where id_tipo_linea in (0,2,3,5,6);
+
+
 create or replace view linea_costa_export.vw__playas as
 select
   row_number() over (order by id_tipo_linea) as gid,
@@ -1594,6 +1776,7 @@ select
   nv4,
   id_tipo_linea,
   tipo_linea,
+  sustrato,
   id_fuente,
   texto_wms,
   criterio,
@@ -1620,6 +1803,7 @@ select
   nv3,
   nv4,
   tipo_linea,
+  sustrato,
   id_fuente,
   texto_wms,
   criterio,
@@ -1645,6 +1829,7 @@ select
   nv3,
   nv4,
   tipo_linea,
+  sustrato,
   id_fuente,
   texto_wms,
   criterio,
@@ -1670,6 +1855,7 @@ select
   nv3,
   nv4,
   tipo_linea,
+  sustrato,
   id_fuente,
   texto_wms,
   criterio,
@@ -2741,6 +2927,55 @@ where id_tipo_linea in (0,2,3,5,6);
 
 
 create or replace view linea_costa_export.vw__linea_costa as
+with base as (
+  select
+    e.id_tipologia_nv1,
+    d.id_tipologia_nv2,
+    c.id_tipologia_nv3,
+    a.id_tipologia_nv4,
+    a.id_playa,
+    a.id_duna,
+    a.id_acantilado,
+    a.id_infraestructura_frente,
+    a.id_infraestructura_2_linea,
+    a.id_infraestructura_tipo,
+    a.id_infraestructura_localizacion,
+    a.id_infraestructura_exposicion,
+    a.id_criterio,
+    a.id_deslinde,
+    a.id_tipo_margen,
+    a.id_estacion,
+    a.estacion_comentario,
+    a.id_fuente,
+    a.id_urbano,
+    a.id_urbano_proximidad,
+    a.tipo_toponimo_ssl,
+    a.toponimo_ssl,
+    a.id_fuente_toponimo_ssl,
+    a.toponimo_sigla,
+    a.toponimo_aeroguia,
+    a.toponimo_carta_nautica,
+    a.toponimo_ministerio,
+    a.excl_dsas,
+    a.causa_excl,
+    a.fecha_excl,
+    a.id_tipo_linea,
+    a.id_sustrato,
+    a.duna_anchura,
+    a.duna_anc_indicador,
+    a.tramos_cambiados,
+    st_length(geom) as length,
+    geom
+  from
+    linea_costa.linea_costa a inner join 
+    linea_costa.tipologia_nv4 b on 
+    a.id_tipologia_nv4=b.id_tipologia_nv4 inner join
+    linea_costa.tipologia_nv3 c on
+    b.id_tipologia_nv3=c.id_tipologia_nv3 inner join
+    linea_costa.tipologia_nv2 d on
+    c.id_tipologia_nv2=d.id_tipologia_nv2 inner join
+    linea_costa.tipologia_nv1 e on 
+    d.id_tipologia_nv1=e.id_tipologia_nv1)
 select
   e.id_tipologia_nv1,
   d.id_tipologia_nv2,
