@@ -6,6 +6,7 @@ SSL database postprocessing.
 
 """
 import arcpy
+import pyarcgis
 
 
 class Toolbox(object):
@@ -72,63 +73,176 @@ class SslCoastLineProductionPostprocessing(object):
         database = parameters[0].valueAsText
         messages.addMessage("Processing {}...".format(database))
 
-        self.__createDomain(database, messages, "acantilado", "id_acantilado", 
-                            "descripcion_acantilado", "acantilado", "Acantilado", "id_acantilado")
-        self.__createDomain(database, messages, "criterio", "id_criterio", "descripcion_criterio", "criterio", 
-                            u"Criterio digitalizacion", "id_criterio")
-        self.__createDomain(database, messages, "deslinde", "id_deslinde", "descripcion_deslinde", 
-                            "deslinde", "Rebasamiento de deslinde", "id_deslinde")
-        self.__createDomain(database, messages, "duna", "id_duna", "descripcion_duna", "duna", 
-                            "Dunas", "id_duna")
-        self.__createDomain(database, messages, "estacion", "id_estacion", "descripcion_estacion", 
-                            "estacion", u"Estacion de digitalizacion", "id_estacion")
-        self.__createDomain(database, messages, "fuente_toponimo_ssl", "id_fuente_toponimo_ssl", 
-                            "descripcion_fuente_toponimo_ssl", "fuente_toponimo_ssl",
-                            "Fuente del toponimo SSL", "id_fuente_toponimo_ssl")
-        self.__createDomain(database, messages, "infraestructura", "id_infraestructura",
-                            "descripcion_infraestructura", "infraestructura", "Infraestructuras",
-                            "id_infraestructura_frente")
-        arcpy.AssignDomainToField_management(database+"\\ed50_utm_30n\\linea_costa",
-                                             "id_infraestructura_2_linea", "infraestructura", "")
-        self.__createDomain(database, messages, "infraestructura_exposicion", "id_infraestructura_exposicion", 
-                            "descripcion_infraestructura_exposicion", "infraestructura_exposicion", 
-                            u"Exposición de infraestructura", "id_infraestructura_exposicion")
-        self.__createDomain(database, messages, "infraestructura_localizacion",
-                            "id_infraestructura_localizacion", "descripcion_infraestructura_localizacion",
-                            "infraestructura_localizacion", "Localización de infraestructura", 
-                            "id_infraestructura_localizacion")
-        self.__createDomain(database, messages, "infraestructura_tipo", "id_infraestructura_tipo", 
-                            "descripcion_infraestructura_tipo", "infraestructura_tipo", 
-                            "Tipo de infraestructura", "id_infraestructura_tipo")
-        self.__createDomain(database, messages, "playa", "id_playa", "descripcion_playa",
-                            "playa", "Playas", "id_playa")
-        self.__createDomain(database, messages, "sustrato", "sustrato", "Descripcion", "sustrato",
-                            "Tipo de sustrato en costas sedimentarias", "id_sustrato")
-        self.__createDomain(database, messages, "tipo_linea", "tipo_linea", "Descripcion", "tipo_linea",
-                            "Tipo de línea para generar corta, larga, erosión", "tipo_linea")
-        self.__createDomain(database, messages, "tipo_margen", "id_tipo_margen", "descripcion_tipo_margen", 
-                            "tipo_margen", "Tipo de margen", "id_tipo_margen")
-        self.__createDomain(database, messages, "tipologia_nv1", "id_tipologia_nv1", "descripcion_nv1", 
-                            "tipologia_nv1", "Tipología a nivel 1", "id_tipologia_nv1")
-        self.__createDomain(database, messages, "tipologia_nv2", "id_tipologia_nv2", "descripcion_nv2", 
-                            "tipologia_nv2", "Tipología a nivel 2", "id_tipologia_nv2")
-        self.__createDomain(database, messages, "tipologia_nv3", "id_tipologia_nv3", "descripcion_nv3", 
-                            "tipologia_nv3", "Tipologia a nivel 3", "id_tipologia_nv3")
-        self.__createDomain(database, messages, "tipologia_nv4", "id_tipologia_nv4", "descripcion_nv4", 
-                            "tipologia_nv4", "Tipologia a nivel 4", "id_tipologia_nv4")
-        self.__createDomain(database, messages, "urbano", "id_urbano", "descripcion_urbano", "urbano", 
-                            "Urbano", "id_urbano")
-        self.__createDomain(database, messages, "urbano_proximidad", "id_urbano_proximidad", 
-                            "descripcion_urbano_proximidad", "urbano_proximidad",
-                            "Proximidad del urbano", "id_urbano_proximidad")
+        domains = [
+            {
+                "domainTable": "acantilado",
+                "keyField": "id_acantilado", 
+                "descField": "descripcion_acantilado",
+                "domainName": "acantilado",
+                "domainDesc": "Acantilado",
+                "applicationFields": ["id_acantilado"]
+            },
+            {
+                "domainTable": "criterio",
+                "keyField": "id_criterio", 
+                "descField": "descripcion_criterio",
+                "domainName": "criterio",
+                "domainDesc": "Criterio digitalizacion",
+                "applicationFields": ["id_criterio"]
+            },
+            {
+                "domainTable": "deslinde",
+                "keyField": "id_deslinde", 
+                "descField": "descripcion_deslinde",
+                "domainName": "deslinde",
+                "domainDesc": "Rebasamiento de deslinde",
+                "applicationFields": ["id_deslinde"]
+            },
+            {
+                "domainTable": "duna",
+                "keyField": "id_duna", 
+                "descField": "descripcion_duna",
+                "domainName": "duna",
+                "domainDesc": "Dunas",
+                "applicationFields": ["id_duna"]
+            },
+            {
+                "domainTable": "estacion",
+                "keyField": "id_estacion", 
+                "descField": "descripcion_estacion",
+                "domainName": "estacion",
+                "domainDesc": "Estacion de digitalizacion",
+                "applicationFields": ["id_estacion"]
+            },
+            {
+                "domainTable": "fuente_toponimo_ssl",
+                "keyField": "id_fuente_toponimo_ssl", 
+                "descField": "descripcion_fuente_toponimo_ssl",
+                "domainName": "fuente_toponimo_ssl",
+                "domainDesc": "Fuente del toponimo SSL",
+                "applicationFields": ["id_fuente_toponimo_ssl"]
+            },
+            {
+                "domainTable": "infraestructura",
+                "keyField": "id_infraestructura", 
+                "descField": "descripcion_infraestructura",
+                "domainName": "infraestructura",
+                "domainDesc": "Infraestructura",
+                "applicationFields": ["id_infraestructura_frente", "id_infraestructura_2_linea"]
+            },
+            {
+                "domainTable": "infraestructura_exposicion",
+                "keyField": "id_infraestructura_exposicion", 
+                "descField": "descripcion_infraestructura_exposicion",
+                "domainName": "infraestructura_exposicion",
+                "domainDesc": "Exposicion de infraestructura",
+                "applicationFields": ["id_infraestructura_exposicion"]
+            },
+            {
+                "domainTable": "infraestructura_localizacion",
+                "keyField": "id_infraestructura_localizacion", 
+                "descField": "descripcion_infraestructura_localizacion",
+                "domainName": "infraestructura_localizacion",
+                "domainDesc": "Localizacion de infraestructura",
+                "applicationFields": ["id_infraestructura_localizacion"]
+            },
+            {
+                "domainTable": "infraestructura_tipo",
+                "keyField": "id_infraestructura_tipo", 
+                "descField": "descripcion_infraestructura_tipo",
+                "domainName": "infraestructura_tipo",
+                "domainDesc": "Tipo de infraestructura",
+                "applicationFields": ["id_infraestructura_tipo"]
+            },
+            {
+                "domainTable": "playa",
+                "keyField": "id_playa", 
+                "descField": "descripcion_playa",
+                "domainName": "playa",
+                "domainDesc": "Playas",
+                "applicationFields": ["id_playa"]
+            },
+            {
+                "domainTable": "sustrato",
+                "keyField": "id_sustrato", 
+                "descField": "Descripcion",
+                "domainName": "sustrato",
+                "domainDesc": "Tipo de sustrato de costas sedimentarias",
+                "applicationFields": ["id_sustrato"]
+            },
+            {
+                "domainTable": "tipo_linea",
+                "keyField": "id_tipo_linea", 
+                "descField": "Descripcion",
+                "domainName": "tipo_linea",
+                "domainDesc": "Tipo de linea para generar corta, larga, erosion",
+                "applicationFields": ["id_tipo_linea"]
+            },
+            {
+                "domainTable": "tipo_margen",
+                "keyField": "id_tipo_margen", 
+                "descField": "descripcion_tipo_margen",
+                "domainName": "tipo_margen",
+                "domainDesc": "Tipo de margen",
+                "applicationFields": ["id_tipo_margen"]
+            },
+            {
+                "domainTable": "tipologia_nv1",
+                "keyField": "id_tipologia_nv1", 
+                "descField": "descripcion_nv1",
+                "domainName": "tipologia_nv1",
+                "domainDesc": "Tipologia a nivel 1",
+                "applicationFields": ["id_tipologia_nv1"]
+            },
+            {
+                "domainTable": "tipologia_nv2",
+                "keyField": "id_tipologia_nv2", 
+                "descField": "descripcion_nv2",
+                "domainName": "tipologia_nv2",
+                "domainDesc": "Tipologia a nivel 2",
+                "applicationFields": ["id_tipologia_nv2"]
+            },
+            {
+                "domainTable": "tipologia_nv3",
+                "keyField": "id_tipologia_nv3", 
+                "descField": "descripcion_nv3",
+                "domainName": "tipologia_nv3",
+                "domainDesc": "Tipologia a nivel 3",
+                "applicationFields": ["id_tipologia_nv3"]
+            },
+            {
+                "domainTable": "tipologia_nv4",
+                "keyField": "id_tipologia_nv4", 
+                "descField": "descripcion_nv4",
+                "domainName": "tipologia_nv4",
+                "domainDesc": "Tipologia a nivel 4",
+                "applicationFields": ["id_tipologia_nv4"]
+            },
+            {
+                "domainTable": "urbano",
+                "keyField": "id_urbano", 
+                "descField": "descripcion_urbano",
+                "domainName": "urbano",
+                "domainDesc": "Urbano",
+                "applicationFields": ["id_urbano"]
+            },
+            {
+                "domainTable": "urbano_proximidad",
+                "keyField": "id_urbano_proximidad", 
+                "descField": "descripcion_urbano_proximidad",
+                "domainName": "urbano_proximidad",
+                "domainDesc": "Proximidad del urbano",
+                "applicationFields": ["id_urbano_proximidad"]
+            }
+        ]
+
+        db = pyarcgis.GeoDatabase("linea_costa", workspace=database)
+        for d in domains:
+            messages.addMessage(d)
+            domain = pyarcgis.GeoDatabaseDomain(d["domainName"], d["domainDesc"])
+            db.tableToDomain(d["domainTable"], d["keyField"], d["descField"], domain)
+            for field in d["applicationFields"]:
+                db.assignDomainToField("ed50_utm_30n\\linea_costa", field, domain)
+
         return True
-
-    def __createDomain(self, database, messages, table, id_field, desc_field, name, desc, applyField):
-        """Creates and applies a domain to a table."""
-        messages.addMessage("Creating domain '{}'...".format(name))
-        arcpy.TableToDomain_management(database+"\\"+table, id_field, desc_field, database,
-                                       name, desc, "REPLACE")
-        arcpy.AssignDomainToField_management(database+"\\ed50_utm_30n\\linea_costa",
-                                             applyField, name, "")
-
 
