@@ -31,6 +31,28 @@ delete from linea_costa.tipologia_nv3;
 delete from linea_costa.tipologia_nv2;
 delete from linea_costa.tipologia_nv1;
 delete from linea_costa.sustrato;
+delete from linea_costa.causa_excl;
+delete from linea_costa.excl_dsas;
+
+
+insert into linea_costa.causa_excl
+select
+  id_causa_excl,
+  causa_excl
+from
+  linea_costa_import.causa_excl
+order by
+  id_causa_excl;
+
+
+insert into linea_costa.excl_dsas
+select
+  id_excl_dsas,
+  excl_dsas
+from
+  linea_costa_import.excl_dsas
+order by
+  id_excl_dsas;
 
 
 insert into linea_costa.tipo_margen
@@ -298,8 +320,8 @@ insert into linea_costa.linea_costa(
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_sustrato,
   duna_anchura,
@@ -354,8 +376,8 @@ with a as
     when toponimo_ministerio='-1' then null
     else toponimo_ministerio
   end as toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_sustrato,
   duna_anchura,
@@ -390,8 +412,8 @@ select
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_sustrato,
   duna_anchura,
@@ -425,8 +447,8 @@ group by
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_sustrato,
   duna_anchura,

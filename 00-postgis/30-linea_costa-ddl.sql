@@ -33,8 +33,8 @@ create table linea_costa.linea_costa(
   toponimo_aeroguia varchar(250),
   toponimo_carta_nautica varchar(250),
   toponimo_ministerio varchar(250),
-  excl_dsas integer,
-  causa_excl integer,
+  id_excl_dsas integer,
+  id_causa_excl integer,
   fecha_excl integer,
   id_sustrato integer,
   duna_anchura integer,
@@ -73,6 +73,24 @@ linea_costa.linea_costa(toponimo_carta_nautica);
 
 create index linea_costa_toponimo_ministerio_idx on
 linea_costa.linea_costa(toponimo_ministerio);
+
+
+create table linea_costa.causa_excl(
+  id_causa_excl integer,
+  causa_excl varchar(250)
+);
+
+alter table linea_costa.causa_excl
+add constraint causa_excl_pkey primary key (id_causa_excl);
+
+
+create table linea_costa.excl_dsas(
+  id_excl_dsas integer,
+  excl_dsas varchar(250)
+);
+
+alter table linea_costa.excl_dsas
+add constraint excl_dsas_pkey primary key (id_excl_dsas);
 
 
 create table linea_costa.tipo_linea (
@@ -309,6 +327,12 @@ foreign key (id_acantilado) references linea_costa.acantilado(id_acantilado);
 alter table linea_costa.linea_costa add constraint sustrato_linea_costa_fkey
 foreign key (id_sustrato) references linea_costa.sustrato(id_sustrato);
 
+alter table linea_costa.linea_costa add constraint excl_dsas_linea_costa_fkey
+foreign key (id_excl_dsas) references linea_costa.excl_dsas(id_excl_dsas);
+
+alter table linea_costa.linea_costa add constraint causa_excl_linea_costa_fkey
+foreign key (id_causa_excl) references linea_costa.causa_excl(id_causa_excl);
+
 alter table linea_costa.linea_costa
 add constraint infraestructura_frente_linea_costa_fkey
 foreign key (id_infraestructura_frente)
@@ -401,8 +425,8 @@ select
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_tipo_linea,
   id_sustrato,
@@ -447,8 +471,8 @@ group by
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_tipo_linea,
   id_sustrato,
@@ -484,8 +508,8 @@ select
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_tipo_linea,
   id_sustrato,
@@ -526,8 +550,8 @@ select
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_tipo_linea,
   id_sustrato,
@@ -564,8 +588,8 @@ group by
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_tipo_linea,
   id_sustrato,
@@ -601,8 +625,8 @@ select
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_tipo_linea,
   id_sustrato,
@@ -643,8 +667,8 @@ select
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_tipo_linea,
   id_sustrato,
@@ -681,8 +705,8 @@ group by
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_tipo_linea,
   id_sustrato,
@@ -718,8 +742,8 @@ select
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_tipo_linea,
   id_sustrato,
@@ -760,8 +784,8 @@ select
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_tipo_linea,
   id_sustrato,
@@ -798,8 +822,8 @@ group by
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_tipo_linea,
   id_sustrato,
@@ -835,8 +859,8 @@ select
   toponimo_aeroguia,
   toponimo_carta_nautica,
   toponimo_ministerio,
-  excl_dsas,
-  causa_excl,
+  id_excl_dsas,
+  id_causa_excl,
   fecha_excl,
   id_tipo_linea,
   id_sustrato,
@@ -2956,8 +2980,8 @@ with base as (
     a.toponimo_aeroguia,
     a.toponimo_carta_nautica,
     a.toponimo_ministerio,
-    a.excl_dsas,
-    a.causa_excl,
+    a.id_excl_dsas,
+    a.id_causa_excl,
     a.fecha_excl,
     a.id_tipo_linea,
     a.id_sustrato,
@@ -3004,8 +3028,8 @@ select
   a.toponimo_aeroguia,
   a.toponimo_carta_nautica,
   a.toponimo_ministerio,
-  a.excl_dsas,
-  a.causa_excl,
+  a.id_excl_dsas,
+  a.id_causa_excl,
   a.fecha_excl,
   a.id_tipo_linea,
   a.id_sustrato,
