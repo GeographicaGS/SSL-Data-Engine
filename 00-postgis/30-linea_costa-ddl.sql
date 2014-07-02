@@ -849,7 +849,7 @@ from a;
 
 create or replace view linea_costa_export.vw__complete_described as
 select
-  t.id_linea_costa as id_linea_costa,
+  t.gid as id_linea_costa,
   tp.id_tipo_linea as id_tipo_linea,
   tp.descripcion as tipo_linea,
   n1.id_tipologia_nv1 as id_nv1,
@@ -906,7 +906,7 @@ select
   st_length(geom) as length,
   geom
 from
-  linea_costa_export.complete_table t
+  linea_costa_export.vw__complete_table t
   left join linea_costa.sustrato subs
   on t.id_sustrato=subs.id_sustrato
   left join linea_costa.tipologia_nv4 n4
