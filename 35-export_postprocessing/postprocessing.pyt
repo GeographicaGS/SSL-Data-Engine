@@ -233,6 +233,22 @@ class SslCoastLineProductionPostprocessing(object):
                 "domainName": "urbano_proximidad",
                 "domainDesc": "Proximidad del urbano",
                 "applicationFields": ["id_urbano_proximidad"]
+            },
+            {
+                "domainTable": "excl_dsas",
+                "keyField": "id_excl_dsas", 
+                "descField": "excl_dsas",
+                "domainName": "excl_dsas",
+                "domainDesc": "Exclusion DSAS",
+                "applicationFields": ["id_excl_dsas"]
+            },
+            {
+                "domainTable": "causa_excl",
+                "keyField": "id_causa_excl", 
+                "descField": "causa_excl",
+                "domainName": "causa_excl",
+                "domainDesc": "Causa de exclusion",
+                "applicationFields": ["id_causa_excl"]
             }
         ]
 
