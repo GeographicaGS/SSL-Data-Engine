@@ -173,4 +173,3 @@ select ssl__urbano_analysis(array['1956', '1978', '1985', '1998',
                                    '2001', '2004', '2007', '2009', '2011']::varchar[]);
 
 commit;
-
